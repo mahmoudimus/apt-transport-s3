@@ -8,16 +8,16 @@
 #
 
 # we want to install deb-s3 gem so we can modify the s3 bucket
-include_recipe 'apt-transport-s3::debs3'
+include_recipe 'apt_transport_s3::debs3'
 
 # install the package if the binary isn't there
 unless ::File.exists?('/usr/lib/apt/methods/s3')
   # let's build the s3 transport package
-  include_recipe 'apt-transport-s3::compile'
+  include_recipe 'apt_transport_s3::compile'
 end
 
 # we want to actually enable the apt repository
-include_recipe 'apt-transport-s3::add_custom_s3_repo'
+include_recipe 'apt_transport_s3::add_custom_s3_repo'
 
 
 if node[:apt_transport_s3][:deb][:refresh_cache]
