@@ -1,7 +1,5 @@
 # -*- mode: ruby -*-
-site :opscode
+chef_api :config
 
-# for development purposes.
-cookbook 'apt'
 
 metadata
