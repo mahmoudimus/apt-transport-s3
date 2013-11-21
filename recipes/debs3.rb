@@ -13,6 +13,11 @@
   end
 end
 
+# this will install ruby1.9.1 in the /usr/bin directory
+# and it will also install the gem1.9.1 binary there as well
+
 gem_package 'deb-s3' do
+  version '0.5.1'
+  gem_binary '/usr/bin/gem1.9.1'
   action :install
 end

@@ -15,7 +15,7 @@ node.default[:apt_transport_s3][:git][:repository] = 'https://github.com/castlab
 
 node.default[:apt_transport_s3][:deb][:make][:enabled] = true
 node.default[:apt_transport_s3][:deb][:make][:location] = '/tmp/repos'
-node.default[:apt_transport_s3][:deb][:name] = 'apt_transport_s3'
+node.default[:apt_transport_s3][:deb][:name] = 'apt-transport-s3'
 node.default[:apt_transport_s3][:deb][:refresh_cache] = true
 
 node.default[:apt_transport_s3][:s3][:endpoint] = 's3-us-west-1.amazonaws.com'

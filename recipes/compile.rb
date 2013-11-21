@@ -78,11 +78,21 @@ if node[:apt_transport_s3][:deb][:make][:enabled]
   end
 
   # install the package locally if the binary isn't there
-  package 'apt-transport-s3' do
-    provider Chef::Provider::Package::Dpkg
-    source %x(ls -1 #{node[:apt_transport_s3][:deb][:make][:location]}/*.deb).chomp
-    action :install
+  ruby_block 'install apt-transport-s3 binary from just built package' do
     not_if { ::File.exists?('/usr/lib/apt/methods/s3') }
+    block do
+      deb_files = Dir.glob("#{node[:apt_transport_s3][:deb][:make][:location]}/*.deb")
+      source_file = deb_files.first
+      Chef::Log.debug("Binary glob results in #{source_file}")
+
+      events = Chef::EventDispatch::Dispatcher.new
+      run_ctx = Chef::RunContext.new(node, {}, events)
+      installer = Chef::Resource::DpkgPackage.new('apt-transport-s3', run_ctx)
+
+      installer.source(source_file)
+      installer.run_action(:install)
+    end
+    action :create
   end
 
   # upload the debian package we just built into the s3 bucket
