@@ -5,13 +5,15 @@
 # Vagrant VMs
 host_cache_path = File.expand_path('../.cache', __FILE__)
 guest_cache_path = '/tmp/vagrant-cache'
-confucius_root = ENV['CONF_ROOT']
+confucius_root = ENV['CONFUCIUS_ROOT']
 
 unless confucius_root
-  warn "[\e[1m\e[31mERROR\e[0m]: Please set the 'CONF_ROOT' " +
+  warn "[\e[1m\e[31mERROR\e[0m]: Please set the 'CONFUCIUS_ROOT' " +
        'environment variable to point to the confucius repo'
   exit 1
 end
+
+::Dir.mkdir(host_cache_path) unless ::Dir.exist?(host_cache_path)
 
 default = {
   :user => ENV['OPSCODE_USER'] || ENV['USER'],
